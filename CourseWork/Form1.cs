@@ -5,7 +5,7 @@ namespace CourseWork
     public partial class Form1 : Form
     {
         private int borderSize = 2;
-        //Size formSize;
+        Size formSize;
         public Form1()
         {
             InitializeComponent();
@@ -41,20 +41,23 @@ namespace CourseWork
 
         private void FullscreenButton_Click(object sender, EventArgs e)
         {
-            if(this.WindowState == FormWindowState.Normal) 
+            if (this.WindowState == FormWindowState.Normal)
             {
+                FullscreenButton.IconChar = FontAwesome.Sharp.IconChar.WindowRestore;
+                formSize = this.ClientSize;
                 this.WindowState = FormWindowState.Maximized;
-                FullscreenButton.IconChar =  FontAwesome.Sharp.IconChar.WindowRestore;
             }
-            else if(this.WindowState == FormWindowState.Maximized)
+            else
             {
-                this.WindowState = FormWindowState.Normal;
                 FullscreenButton.IconChar = FontAwesome.Sharp.IconChar.SquareFull;
+                this.WindowState = FormWindowState.Normal;
+                this.Size = formSize;
             }
         }
 
         private void MinimizeButton_Click(object sender, EventArgs e)
         {
+            formSize = this.ClientSize;
             this.WindowState = FormWindowState.Minimized;
         }
 
@@ -68,7 +71,9 @@ namespace CourseWork
         {
             const int WM_NCCALCSIZE = 0x0083;
             const int WM_NCHITTEST = 0x0084;
-
+            const int WM_SYSCOMMAND = 0x0112;
+            const int SC_MINIMIZE = 0xF020; //Minimize form (Before)
+            const int SC_RESTORE = 0xF120; //Restore form (Before)
             const int resizeAreaSize = 10;
 
             // Represents client area of the window
@@ -88,9 +93,9 @@ namespace CourseWork
                 base.WndProc(ref m);
                 if (this.WindowState == FormWindowState.Normal)//Resize the form if it is in normal state
                 {
-                    if ((int)m.Result == HTCLIENT)//If the result of the m (mouse pointer) is in the client area of the window
+                    if ((int)m.Result == HTCLIENT)//If the result of the mouse pointer is in the client area of the window
                     {
-                        Point screenPoint = new Point(m.LParam.ToInt32()); //Gets screen point coordinates(X and Y coordinate of the pointer)                           
+                        Point screenPoint = new Point(m.LParam.ToInt32()); // Gets screen point coordinates                       
                         Point clientPoint = this.PointToClient(screenPoint);                      
                         if (clientPoint.Y <= resizeAreaSize)
                         {
@@ -101,7 +106,7 @@ namespace CourseWork
                             else 
                                 m.Result = (IntPtr)HTTOPRIGHT;
                         }
-                        else if (clientPoint.Y <= (this.Size.Height - resizeAreaSize)) //If the pointer is inside the form at the Y coordinate(discounting the resize area size)
+                        else if (clientPoint.Y <= (this.Size.Height - resizeAreaSize)) //If the pointer is inside the form at the Y coordinate
                         {
                             if (clientPoint.X <= resizeAreaSize)
                                 m.Result = (IntPtr)HTLEFT;
@@ -124,6 +129,15 @@ namespace CourseWork
             if (m.Msg==WM_NCCALCSIZE && m.WParam.ToInt32() == 1)
             {
                 return;
+            }
+            if (m.Msg == WM_SYSCOMMAND)
+            {
+
+                int wParam = (m.WParam.ToInt32() & 0xFFF0);
+                if (wParam == SC_MINIMIZE)  //Before
+                    formSize = this.ClientSize;
+                if (wParam == SC_RESTORE)// Restored form(Before)
+                    this.Size = formSize;
             }
             base.WndProc(ref m);
         }
@@ -161,7 +175,7 @@ namespace CourseWork
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //formSize = this.ClientSize;
+            formSize = this.ClientSize;
         }
 
         private void iconButton1_Click(object sender, EventArgs e)
