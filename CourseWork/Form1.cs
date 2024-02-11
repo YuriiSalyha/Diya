@@ -1,16 +1,26 @@
+using Diya;
+using Newtonsoft.Json;
 using System.Runtime.InteropServices;
+using System.Windows.Controls;
 
 namespace CourseWork
 {
     public partial class Form1 : Form
     {
+        string configPath = System.IO.Path.Combine(Environment.CurrentDirectory, "config.json");
+        private int sidePanelWidth = 63;
         private int borderSize = 2;
         Size formSize;
+        private Form activeForm = null;
+        Config cfg;
         public Form1()
         {
             InitializeComponent();
             CollapseMenu();
+            AdjustItems();
+            LoginCheck();
             openChildForm(new NewsFeed());
+            panelSide.Width = sidePanelWidth;
             this.Padding = new Padding(borderSize); // Border size
             this.BackColor = Color.Black; // Border color
         }
@@ -20,9 +30,9 @@ namespace CourseWork
 
 
         [DllImport("user32.dll", EntryPoint = "SendMessage")]
-        private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam,int lParam);
+        private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
 
-       
+
 
         private void label1_Click(object sender, EventArgs e)
         {
@@ -31,7 +41,46 @@ namespace CourseWork
 
         private void iconButton6_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            //Updating config
+            Config newCfg = new Config();
+            string output = JsonConvert.SerializeObject(newCfg);
+            File.WriteAllText(configPath, output);
+            this.Visible = false;
+            LoginCheck();
+        }
+
+        private void LoginCheck()
+        {
+            var json = File.ReadAllText(configPath);
+            cfg = JsonConvert.DeserializeObject<Config>(json);
+            if ((DateTime.Now.Subtract(cfg.loginDate).TotalDays >= 7) && cfg.login == true)
+            {
+                MessageBox.Show("Your previous login session has expired, please login again");
+                Config newCfg = new Config();
+                string output = JsonConvert.SerializeObject(newCfg);
+                File.WriteAllText(configPath, output);
+            }
+            if (!cfg.login)
+            {
+                if (activeForm != null)
+                {
+                    activeForm.Close();
+                }
+                using (LoginForm form = new LoginForm())
+                {
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        this.Visible = true;
+                        openChildForm(new NewsFeed());
+                    }
+                    else
+                    {
+                        Application.Exit();
+                    }
+                    
+                }
+            }
+            
         }
 
         private void CloseButton_Click(object sender, EventArgs e)
@@ -64,7 +113,7 @@ namespace CourseWork
         private void panel3_MouseDown(object sender, MouseEventArgs e) // title bar
         {
             ReleaseCapture();
-            SendMessage(this.Handle, 0x112,0xf012,0);
+            SendMessage(this.Handle, 0x112, 0xf012, 0);
         }
 
         protected override void WndProc(ref Message m)
@@ -77,11 +126,11 @@ namespace CourseWork
             const int resizeAreaSize = 10;
 
             // Represents client area of the window
-            const int HTCLIENT = 1; 
+            const int HTCLIENT = 1;
             // Represents every border
-            const int HTLEFT = 10;  
-            const int HTRIGHT = 11; 
-            const int HTTOP = 12;   
+            const int HTLEFT = 10;
+            const int HTRIGHT = 11;
+            const int HTTOP = 12;
             const int HTTOPLEFT = 13;
             const int HTTOPRIGHT = 14;
             const int HTBOTTOM = 15;
@@ -89,21 +138,21 @@ namespace CourseWork
             const int HTBOTTOMRIGHT = 17;
 
             if (m.Msg == WM_NCHITTEST)
-            { 
+            {
                 base.WndProc(ref m);
                 if (this.WindowState == FormWindowState.Normal)//Resize the form if it is in normal state
                 {
                     if ((int)m.Result == HTCLIENT)//If the result of the mouse pointer is in the client area of the window
                     {
                         Point screenPoint = new Point(m.LParam.ToInt32()); // Gets screen point coordinates                       
-                        Point clientPoint = this.PointToClient(screenPoint);                      
+                        Point clientPoint = this.PointToClient(screenPoint);
                         if (clientPoint.Y <= resizeAreaSize)
                         {
                             if (clientPoint.X <= resizeAreaSize)
-                                m.Result = (IntPtr)HTTOPLEFT; 
+                                m.Result = (IntPtr)HTTOPLEFT;
                             else if (clientPoint.X < (this.Size.Width - resizeAreaSize))
-                                m.Result = (IntPtr)HTTOP; 
-                            else 
+                                m.Result = (IntPtr)HTTOP;
+                            else
                                 m.Result = (IntPtr)HTTOPRIGHT;
                         }
                         else if (clientPoint.Y <= (this.Size.Height - resizeAreaSize)) //If the pointer is inside the form at the Y coordinate
@@ -117,7 +166,7 @@ namespace CourseWork
                         {
                             if (clientPoint.X <= resizeAreaSize)
                                 m.Result = (IntPtr)HTBOTTOMLEFT;
-                            else if (clientPoint.X < (this.Size.Width - resizeAreaSize)) 
+                            else if (clientPoint.X < (this.Size.Width - resizeAreaSize))
                                 m.Result = (IntPtr)HTBOTTOM;
                             else
                                 m.Result = (IntPtr)HTBOTTOMRIGHT;
@@ -126,7 +175,7 @@ namespace CourseWork
                 }
                 return;
             }
-            if (m.Msg==WM_NCCALCSIZE && m.WParam.ToInt32() == 1)
+            if (m.Msg == WM_NCCALCSIZE && m.WParam.ToInt32() == 1)
             {
                 return;
             }
@@ -157,6 +206,23 @@ namespace CourseWork
         private void Form1_Resize(object sender, EventArgs e)
         {
             AdjustForm();
+            AdjustItems();
+        }
+
+        private void AdjustItems()
+        {
+            if (label1.Visible) // Checks if menu is collapsed
+            {
+                panelSide.Width = Convert.ToInt32(this.Width * 0.25);
+                btnMenu.Width = panelSide.Width - label1.Width;
+            }
+            else
+            {
+                panelSide.Width = Convert.ToInt32(this.Width * 0.05);
+                btnMenu.Width = panelSide.Width;
+            }
+
+            panelMenu.Height = Convert.ToInt32((this.Height * 0.8));
         }
 
         private void AdjustForm()
@@ -185,12 +251,13 @@ namespace CourseWork
 
         private void CollapseMenu()
         {
-            if (this.panelSide.Width > 150)
+            if (this.panelSide.Width > Convert.ToInt32(this.Width * 0.1))
             {
-                panelSide.Width = 100;
+                panelSide.Width = Convert.ToInt32(this.Width * 0.1);
                 label1.Visible = false;
                 btnMenu.Dock = DockStyle.Top;
-                foreach (Button menuButton in panelMenu.Controls.OfType<Button>())
+                btnMenu.Width = panelSide.Width;
+                foreach (System.Windows.Forms.Button menuButton in panelMenu.Controls.OfType<System.Windows.Forms.Button>())
                 {
                     menuButton.Text = "";
                     menuButton.ImageAlign = ContentAlignment.MiddleCenter;
@@ -199,10 +266,12 @@ namespace CourseWork
             }
             else
             {
-                panelSide.Width = 170;
+                //panelSide.Width = 170;
+                panelSide.Width = Convert.ToInt32(this.Width * 0.2);
                 label1.Visible = true;
                 btnMenu.Dock = DockStyle.None;
-                foreach (Button menuButton in panelMenu.Controls.OfType<Button>())
+                btnMenu.Width = panelSide.Width - label1.Width;
+                foreach (System.Windows.Forms.Button menuButton in panelMenu.Controls.OfType<System.Windows.Forms.Button>())
                 {
                     menuButton.Text = " " + menuButton.Tag.ToString();
                     menuButton.ImageAlign = ContentAlignment.MiddleCenter;
@@ -211,7 +280,7 @@ namespace CourseWork
             }
         }
 
-        private Form activeForm = null;
+
         private void openChildForm(Form childForm)
         {
             if (activeForm != null)
@@ -247,6 +316,11 @@ namespace CourseWork
         private void MenuButton_Click(object sender, EventArgs e) // Menu
         {
             openChildForm(new Menu());
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

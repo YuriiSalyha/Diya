@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.panelSide = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.panelLogo = new System.Windows.Forms.Panel();
             this.btnMenu = new FontAwesome.Sharp.IconButton();
             this.label1 = new System.Windows.Forms.Label();
             this.panelMenu = new System.Windows.Forms.Panel();
@@ -45,7 +45,7 @@
             this.DesktopPanel = new System.Windows.Forms.Panel();
             this.pagePanel = new System.Windows.Forms.Panel();
             this.panelSide.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.panelLogo.SuspendLayout();
             this.panelMenu.SuspendLayout();
             this.panel3.SuspendLayout();
             this.DesktopPanel.SuspendLayout();
@@ -54,7 +54,7 @@
             // panelSide
             // 
             this.panelSide.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.panelSide.Controls.Add(this.panel2);
+            this.panelSide.Controls.Add(this.panelLogo);
             this.panelSide.Controls.Add(this.panelMenu);
             this.panelSide.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelSide.Location = new System.Drawing.Point(0, 0);
@@ -63,15 +63,15 @@
             this.panelSide.TabIndex = 0;
             this.panelSide.Tag = "panelSide";
             // 
-            // panel2
+            // panelLogo
             // 
-            this.panel2.Controls.Add(this.btnMenu);
-            this.panel2.Controls.Add(this.label1);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(170, 70);
-            this.panel2.TabIndex = 1;
+            this.panelLogo.Controls.Add(this.btnMenu);
+            this.panelLogo.Controls.Add(this.label1);
+            this.panelLogo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelLogo.Location = new System.Drawing.Point(0, 0);
+            this.panelLogo.Name = "panelLogo";
+            this.panelLogo.Size = new System.Drawing.Size(170, 70);
+            this.panelLogo.TabIndex = 1;
             // 
             // btnMenu
             // 
@@ -326,13 +326,14 @@
             this.Controls.Add(this.DesktopPanel);
             this.Controls.Add(this.panel3);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "меню";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResizeEnd += new System.EventHandler(this.Form1_ResizeEnd);
             this.Resize += new System.EventHandler(this.Form1_Resize);
             this.panelSide.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.panelLogo.ResumeLayout(false);
+            this.panelLogo.PerformLayout();
             this.panelMenu.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.DesktopPanel.ResumeLayout(false);
@@ -343,7 +344,7 @@
         #endregion
 
         private Panel panelSide;
-        private Panel panel2;
+        private Panel panelLogo;
         private FontAwesome.Sharp.IconButton btnMenu;
         private Label label1;
         private Panel panel3;
