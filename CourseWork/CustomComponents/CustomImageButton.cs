@@ -9,7 +9,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.ComponentModel;
 
-namespace Diya.CustomComponents
+namespace Diia.CustomComponents
 {
 
     public class CustomImageButton : Button

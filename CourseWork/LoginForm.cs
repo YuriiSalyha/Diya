@@ -1,4 +1,4 @@
-﻿using Diya.CustomComponents;
+﻿using Diia.CustomComponents;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Shapes;
 
-namespace Diya
+namespace Diia
 {
     public partial class LoginForm : Form
     {

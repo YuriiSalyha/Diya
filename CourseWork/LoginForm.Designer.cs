@@ -1,4 +1,4 @@
-﻿namespace Diya
+﻿namespace Diia
 {
     partial class LoginForm
     {

@@ -1,4 +1,4 @@
-﻿using Diya.CustomComponents;
+﻿using Diia.CustomComponents;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -65,7 +65,7 @@ namespace CourseWork
 
 
             // create a button out of fetched data
-            Bitmap image = new Bitmap(Diya.Properties.Resources.Sample);
+            Bitmap image = new Bitmap(Diia.Properties.Resources.Sample);
             createButton(image, "News");
             createButton(image, "News");
             createButton(image, "News");

@@ -67,7 +67,7 @@
         #endregion
 
         private Label label1;
-        private Diya.CustomComponents.CustomImageButton customImageButton1;
+        private Diia.CustomComponents.CustomImageButton customImageButton1;
         private FlowLayoutPanel NewsPanel;
     }
 }
