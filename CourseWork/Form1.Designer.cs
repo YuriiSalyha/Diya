@@ -28,322 +28,344 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panelSide = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.btnMenu = new FontAwesome.Sharp.IconButton();
-            this.label1 = new System.Windows.Forms.Label();
-            this.panelMenu = new System.Windows.Forms.Panel();
-            this.MenuButton = new FontAwesome.Sharp.IconButton();
-            this.iconButton2 = new FontAwesome.Sharp.IconButton();
-            this.iconButton6 = new FontAwesome.Sharp.IconButton();
-            this.iconButton4 = new FontAwesome.Sharp.IconButton();
-            this.iconButton3 = new FontAwesome.Sharp.IconButton();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.MinimizeButton = new FontAwesome.Sharp.IconButton();
-            this.FullscreenButton = new FontAwesome.Sharp.IconButton();
-            this.CloseButton = new FontAwesome.Sharp.IconButton();
-            this.DesktopPanel = new System.Windows.Forms.Panel();
-            this.pagePanel = new System.Windows.Forms.Panel();
-            this.panelSide.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.panelMenu.SuspendLayout();
-            this.panel3.SuspendLayout();
-            this.DesktopPanel.SuspendLayout();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            panelSide = new Panel();
+            panelLogo = new Panel();
+            btnMenu = new FontAwesome.Sharp.IconButton();
+            label1 = new Label();
+            panelMenu = new Panel();
+            MenuButton = new FontAwesome.Sharp.IconButton();
+            iconButton2 = new FontAwesome.Sharp.IconButton();
+            iconButton6 = new FontAwesome.Sharp.IconButton();
+            iconButton4 = new FontAwesome.Sharp.IconButton();
+            iconButton3 = new FontAwesome.Sharp.IconButton();
+            panel3 = new Panel();
+            MinimizeButton = new FontAwesome.Sharp.IconButton();
+            FullscreenButton = new FontAwesome.Sharp.IconButton();
+            CloseButton = new FontAwesome.Sharp.IconButton();
+            DesktopPanel = new Panel();
+            pagePanel = new Panel();
+            timer1 = new System.Windows.Forms.Timer(components);
+            timer2 = new System.Windows.Forms.Timer(components);
+            panelSide.SuspendLayout();
+            panelLogo.SuspendLayout();
+            panelMenu.SuspendLayout();
+            panel3.SuspendLayout();
+            DesktopPanel.SuspendLayout();
+            SuspendLayout();
             // 
             // panelSide
             // 
-            this.panelSide.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.panelSide.Controls.Add(this.panel2);
-            this.panelSide.Controls.Add(this.panelMenu);
-            this.panelSide.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panelSide.Location = new System.Drawing.Point(0, 0);
-            this.panelSide.Name = "panelSide";
-            this.panelSide.Size = new System.Drawing.Size(170, 470);
-            this.panelSide.TabIndex = 0;
-            this.panelSide.Tag = "panelSide";
+            panelSide.BackColor = SystemColors.ActiveCaptionText;
+            panelSide.Controls.Add(panelLogo);
+            panelSide.Controls.Add(panelMenu);
+            panelSide.Dock = DockStyle.Left;
+            panelSide.Location = new Point(0, 0);
+            panelSide.Margin = new Padding(3, 4, 3, 4);
+            panelSide.Name = "panelSide";
+            panelSide.Size = new Size(194, 627);
+            panelSide.TabIndex = 0;
+            panelSide.Tag = "panelSide";
             // 
-            // panel2
+            // panelLogo
             // 
-            this.panel2.Controls.Add(this.btnMenu);
-            this.panel2.Controls.Add(this.label1);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(170, 70);
-            this.panel2.TabIndex = 1;
+            panelLogo.Controls.Add(btnMenu);
+            panelLogo.Controls.Add(label1);
+            panelLogo.Dock = DockStyle.Top;
+            panelLogo.Location = new Point(0, 0);
+            panelLogo.Margin = new Padding(3, 4, 3, 4);
+            panelLogo.Name = "panelLogo";
+            panelLogo.Size = new Size(194, 93);
+            panelLogo.TabIndex = 1;
             // 
             // btnMenu
             // 
-            this.btnMenu.FlatAppearance.BorderSize = 0;
-            this.btnMenu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMenu.ForeColor = System.Drawing.Color.White;
-            this.btnMenu.IconChar = FontAwesome.Sharp.IconChar.BarChart;
-            this.btnMenu.IconColor = System.Drawing.Color.White;
-            this.btnMenu.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnMenu.Location = new System.Drawing.Point(122, 20);
-            this.btnMenu.Name = "btnMenu";
-            this.btnMenu.Size = new System.Drawing.Size(41, 36);
-            this.btnMenu.TabIndex = 2;
-            this.btnMenu.Tag = " ";
-            this.btnMenu.UseVisualStyleBackColor = true;
-            this.btnMenu.Click += new System.EventHandler(this.iconButton1_Click);
+            btnMenu.FlatAppearance.BorderSize = 0;
+            btnMenu.FlatStyle = FlatStyle.Flat;
+            btnMenu.ForeColor = Color.White;
+            btnMenu.IconChar = FontAwesome.Sharp.IconChar.BarChart;
+            btnMenu.IconColor = Color.White;
+            btnMenu.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnMenu.Location = new Point(139, 27);
+            btnMenu.Margin = new Padding(3, 4, 3, 4);
+            btnMenu.Name = "btnMenu";
+            btnMenu.Size = new Size(47, 48);
+            btnMenu.TabIndex = 2;
+            btnMenu.Tag = " ";
+            btnMenu.UseVisualStyleBackColor = true;
+            btnMenu.Click += iconButton1_Click;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label1.Location = new System.Drawing.Point(6, 6);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(110, 50);
-            this.label1.TabIndex = 2;
-            this.label1.Tag = "Logo";
-            this.label1.Text = "Logo";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            label1.AutoSize = true;
+            label1.BackColor = SystemColors.ActiveCaptionText;
+            label1.Font = new Font("Segoe UI", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.ForeColor = SystemColors.ButtonHighlight;
+            label1.Location = new Point(7, 8);
+            label1.Name = "label1";
+            label1.Size = new Size(138, 62);
+            label1.TabIndex = 2;
+            label1.Tag = "Logo";
+            label1.Text = "Logo";
+            label1.Click += label1_Click;
             // 
             // panelMenu
             // 
-            this.panelMenu.Controls.Add(this.MenuButton);
-            this.panelMenu.Controls.Add(this.iconButton2);
-            this.panelMenu.Controls.Add(this.iconButton6);
-            this.panelMenu.Controls.Add(this.iconButton4);
-            this.panelMenu.Controls.Add(this.iconButton3);
-            this.panelMenu.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelMenu.Location = new System.Drawing.Point(0, 70);
-            this.panelMenu.Name = "panelMenu";
-            this.panelMenu.Size = new System.Drawing.Size(170, 400);
-            this.panelMenu.TabIndex = 1;
+            panelMenu.Controls.Add(MenuButton);
+            panelMenu.Controls.Add(iconButton2);
+            panelMenu.Controls.Add(iconButton6);
+            panelMenu.Controls.Add(iconButton4);
+            panelMenu.Controls.Add(iconButton3);
+            panelMenu.Dock = DockStyle.Bottom;
+            panelMenu.Location = new Point(0, 94);
+            panelMenu.Margin = new Padding(3, 4, 3, 4);
+            panelMenu.Name = "panelMenu";
+            panelMenu.Size = new Size(194, 533);
+            panelMenu.TabIndex = 1;
             // 
             // MenuButton
             // 
-            this.MenuButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.MenuButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.MenuButton.FlatAppearance.BorderSize = 0;
-            this.MenuButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.MenuButton.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.MenuButton.ForeColor = System.Drawing.Color.White;
-            this.MenuButton.IconChar = FontAwesome.Sharp.IconChar.CircleUser;
-            this.MenuButton.IconColor = System.Drawing.Color.White;
-            this.MenuButton.IconFont = FontAwesome.Sharp.IconFont.Solid;
-            this.MenuButton.IconSize = 36;
-            this.MenuButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.MenuButton.Location = new System.Drawing.Point(0, 171);
-            this.MenuButton.Name = "MenuButton";
-            this.MenuButton.Size = new System.Drawing.Size(170, 57);
-            this.MenuButton.TabIndex = 5;
-            this.MenuButton.Tag = "Menu";
-            this.MenuButton.Text = "Menu";
-            this.MenuButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.MenuButton.UseVisualStyleBackColor = true;
-            this.MenuButton.Click += new System.EventHandler(this.MenuButton_Click);
+            MenuButton.Cursor = Cursors.Hand;
+            MenuButton.Dock = DockStyle.Top;
+            MenuButton.FlatAppearance.BorderSize = 0;
+            MenuButton.FlatStyle = FlatStyle.Flat;
+            MenuButton.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            MenuButton.ForeColor = Color.White;
+            MenuButton.IconChar = FontAwesome.Sharp.IconChar.CircleUser;
+            MenuButton.IconColor = Color.White;
+            MenuButton.IconFont = FontAwesome.Sharp.IconFont.Solid;
+            MenuButton.IconSize = 36;
+            MenuButton.ImageAlign = ContentAlignment.TopCenter;
+            MenuButton.Location = new Point(0, 228);
+            MenuButton.Margin = new Padding(3, 4, 3, 4);
+            MenuButton.Name = "MenuButton";
+            MenuButton.Size = new Size(194, 76);
+            MenuButton.TabIndex = 5;
+            MenuButton.Tag = "Menu";
+            MenuButton.Text = "Menu";
+            MenuButton.TextAlign = ContentAlignment.BottomCenter;
+            MenuButton.UseVisualStyleBackColor = true;
+            MenuButton.Click += MenuButton_Click;
             // 
             // iconButton2
             // 
-            this.iconButton2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.iconButton2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.iconButton2.FlatAppearance.BorderSize = 0;
-            this.iconButton2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.iconButton2.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.iconButton2.ForeColor = System.Drawing.Color.White;
-            this.iconButton2.IconChar = FontAwesome.Sharp.IconChar.Bolt;
-            this.iconButton2.IconColor = System.Drawing.Color.White;
-            this.iconButton2.IconFont = FontAwesome.Sharp.IconFont.Solid;
-            this.iconButton2.IconSize = 36;
-            this.iconButton2.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.iconButton2.Location = new System.Drawing.Point(0, 114);
-            this.iconButton2.Name = "iconButton2";
-            this.iconButton2.Size = new System.Drawing.Size(170, 57);
-            this.iconButton2.TabIndex = 2;
-            this.iconButton2.Tag = "Services";
-            this.iconButton2.Text = "Services";
-            this.iconButton2.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.iconButton2.UseVisualStyleBackColor = true;
-            this.iconButton2.Click += new System.EventHandler(this.iconButton2_Click);
+            iconButton2.Cursor = Cursors.Hand;
+            iconButton2.Dock = DockStyle.Top;
+            iconButton2.FlatAppearance.BorderSize = 0;
+            iconButton2.FlatStyle = FlatStyle.Flat;
+            iconButton2.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            iconButton2.ForeColor = Color.White;
+            iconButton2.IconChar = FontAwesome.Sharp.IconChar.Bolt;
+            iconButton2.IconColor = Color.White;
+            iconButton2.IconFont = FontAwesome.Sharp.IconFont.Solid;
+            iconButton2.IconSize = 36;
+            iconButton2.ImageAlign = ContentAlignment.TopCenter;
+            iconButton2.Location = new Point(0, 152);
+            iconButton2.Margin = new Padding(3, 4, 3, 4);
+            iconButton2.Name = "iconButton2";
+            iconButton2.Size = new Size(194, 76);
+            iconButton2.TabIndex = 2;
+            iconButton2.Tag = "Services";
+            iconButton2.Text = "Services";
+            iconButton2.TextAlign = ContentAlignment.BottomCenter;
+            iconButton2.UseVisualStyleBackColor = true;
+            iconButton2.Click += iconButton2_Click;
             // 
             // iconButton6
             // 
-            this.iconButton6.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.iconButton6.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.iconButton6.FlatAppearance.BorderSize = 0;
-            this.iconButton6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.iconButton6.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.iconButton6.ForeColor = System.Drawing.Color.White;
-            this.iconButton6.IconChar = FontAwesome.Sharp.IconChar.DoorOpen;
-            this.iconButton6.IconColor = System.Drawing.Color.White;
-            this.iconButton6.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.iconButton6.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.iconButton6.Location = new System.Drawing.Point(0, 330);
-            this.iconButton6.Name = "iconButton6";
-            this.iconButton6.Size = new System.Drawing.Size(170, 70);
-            this.iconButton6.TabIndex = 6;
-            this.iconButton6.Tag = "Log Off";
-            this.iconButton6.Text = "Log Off";
-            this.iconButton6.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.iconButton6.UseVisualStyleBackColor = true;
-            this.iconButton6.Click += new System.EventHandler(this.iconButton6_Click);
+            iconButton6.Cursor = Cursors.Hand;
+            iconButton6.Dock = DockStyle.Bottom;
+            iconButton6.FlatAppearance.BorderSize = 0;
+            iconButton6.FlatStyle = FlatStyle.Flat;
+            iconButton6.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            iconButton6.ForeColor = Color.White;
+            iconButton6.IconChar = FontAwesome.Sharp.IconChar.DoorOpen;
+            iconButton6.IconColor = Color.White;
+            iconButton6.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iconButton6.ImageAlign = ContentAlignment.TopCenter;
+            iconButton6.Location = new Point(0, 440);
+            iconButton6.Margin = new Padding(3, 4, 3, 4);
+            iconButton6.Name = "iconButton6";
+            iconButton6.Size = new Size(194, 93);
+            iconButton6.TabIndex = 6;
+            iconButton6.Tag = "Log Off";
+            iconButton6.Text = "Log Off";
+            iconButton6.TextAlign = ContentAlignment.BottomCenter;
+            iconButton6.UseVisualStyleBackColor = true;
+            iconButton6.Click += iconButton6_Click;
             // 
             // iconButton4
             // 
-            this.iconButton4.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.iconButton4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.iconButton4.FlatAppearance.BorderSize = 0;
-            this.iconButton4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.iconButton4.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.iconButton4.ForeColor = System.Drawing.Color.White;
-            this.iconButton4.IconChar = FontAwesome.Sharp.IconChar.Passport;
-            this.iconButton4.IconColor = System.Drawing.Color.White;
-            this.iconButton4.IconFont = FontAwesome.Sharp.IconFont.Solid;
-            this.iconButton4.IconSize = 36;
-            this.iconButton4.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.iconButton4.Location = new System.Drawing.Point(0, 57);
-            this.iconButton4.Name = "iconButton4";
-            this.iconButton4.Size = new System.Drawing.Size(170, 57);
-            this.iconButton4.TabIndex = 4;
-            this.iconButton4.Tag = "Documents";
-            this.iconButton4.Text = "Documents";
-            this.iconButton4.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.iconButton4.UseVisualStyleBackColor = true;
-            this.iconButton4.Click += new System.EventHandler(this.iconButton4_Click);
+            iconButton4.Cursor = Cursors.Hand;
+            iconButton4.Dock = DockStyle.Top;
+            iconButton4.FlatAppearance.BorderSize = 0;
+            iconButton4.FlatStyle = FlatStyle.Flat;
+            iconButton4.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            iconButton4.ForeColor = Color.White;
+            iconButton4.IconChar = FontAwesome.Sharp.IconChar.Passport;
+            iconButton4.IconColor = Color.White;
+            iconButton4.IconFont = FontAwesome.Sharp.IconFont.Solid;
+            iconButton4.IconSize = 36;
+            iconButton4.ImageAlign = ContentAlignment.TopCenter;
+            iconButton4.Location = new Point(0, 76);
+            iconButton4.Margin = new Padding(3, 4, 3, 4);
+            iconButton4.Name = "iconButton4";
+            iconButton4.Size = new Size(194, 76);
+            iconButton4.TabIndex = 4;
+            iconButton4.Tag = "Documents";
+            iconButton4.Text = "Documents";
+            iconButton4.TextAlign = ContentAlignment.BottomCenter;
+            iconButton4.UseVisualStyleBackColor = true;
+            iconButton4.Click += iconButton4_Click;
             // 
             // iconButton3
             // 
-            this.iconButton3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.iconButton3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.iconButton3.FlatAppearance.BorderSize = 0;
-            this.iconButton3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.iconButton3.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.iconButton3.ForeColor = System.Drawing.Color.White;
-            this.iconButton3.IconChar = FontAwesome.Sharp.IconChar.Newspaper;
-            this.iconButton3.IconColor = System.Drawing.Color.White;
-            this.iconButton3.IconFont = FontAwesome.Sharp.IconFont.Solid;
-            this.iconButton3.IconSize = 36;
-            this.iconButton3.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.iconButton3.Location = new System.Drawing.Point(0, 0);
-            this.iconButton3.Name = "iconButton3";
-            this.iconButton3.Size = new System.Drawing.Size(170, 57);
-            this.iconButton3.TabIndex = 3;
-            this.iconButton3.Tag = "News Feed";
-            this.iconButton3.Text = "News Feed";
-            this.iconButton3.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.iconButton3.UseVisualStyleBackColor = true;
-            this.iconButton3.Click += new System.EventHandler(this.iconButton3_Click);
+            iconButton3.Cursor = Cursors.Hand;
+            iconButton3.Dock = DockStyle.Top;
+            iconButton3.FlatAppearance.BorderSize = 0;
+            iconButton3.FlatStyle = FlatStyle.Flat;
+            iconButton3.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            iconButton3.ForeColor = Color.White;
+            iconButton3.IconChar = FontAwesome.Sharp.IconChar.Newspaper;
+            iconButton3.IconColor = Color.White;
+            iconButton3.IconFont = FontAwesome.Sharp.IconFont.Solid;
+            iconButton3.IconSize = 36;
+            iconButton3.ImageAlign = ContentAlignment.TopCenter;
+            iconButton3.Location = new Point(0, 0);
+            iconButton3.Margin = new Padding(3, 4, 3, 4);
+            iconButton3.Name = "iconButton3";
+            iconButton3.Size = new Size(194, 76);
+            iconButton3.TabIndex = 3;
+            iconButton3.Tag = "News Feed";
+            iconButton3.Text = "News Feed";
+            iconButton3.TextAlign = ContentAlignment.BottomCenter;
+            iconButton3.UseVisualStyleBackColor = true;
+            iconButton3.Click += iconButton3_Click;
             // 
             // panel3
             // 
-            this.panel3.BackColor = System.Drawing.Color.Black;
-            this.panel3.Controls.Add(this.MinimizeButton);
-            this.panel3.Controls.Add(this.FullscreenButton);
-            this.panel3.Controls.Add(this.CloseButton);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel3.Location = new System.Drawing.Point(0, 0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(800, 25);
-            this.panel3.TabIndex = 1;
-            this.panel3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel3_MouseDown);
+            panel3.BackColor = Color.Black;
+            panel3.Controls.Add(MinimizeButton);
+            panel3.Controls.Add(FullscreenButton);
+            panel3.Controls.Add(CloseButton);
+            panel3.Dock = DockStyle.Top;
+            panel3.Location = new Point(0, 0);
+            panel3.Margin = new Padding(3, 4, 3, 4);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(914, 33);
+            panel3.TabIndex = 1;
+            panel3.MouseDown += panel3_MouseDown;
             // 
             // MinimizeButton
             // 
-            this.MinimizeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.MinimizeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(221)))), ((int)(((byte)(210)))));
-            this.MinimizeButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.MinimizeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.MinimizeButton.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.MinimizeButton.IconChar = FontAwesome.Sharp.IconChar.WindowMinimize;
-            this.MinimizeButton.IconColor = System.Drawing.Color.White;
-            this.MinimizeButton.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.MinimizeButton.IconSize = 20;
-            this.MinimizeButton.Location = new System.Drawing.Point(665, 0);
-            this.MinimizeButton.Margin = new System.Windows.Forms.Padding(4);
-            this.MinimizeButton.Name = "MinimizeButton";
-            this.MinimizeButton.Size = new System.Drawing.Size(45, 25);
-            this.MinimizeButton.TabIndex = 4;
-            this.MinimizeButton.UseVisualStyleBackColor = false;
-            this.MinimizeButton.Click += new System.EventHandler(this.MinimizeButton_Click);
+            MinimizeButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            MinimizeButton.BackColor = Color.FromArgb(0, 221, 210);
+            MinimizeButton.Cursor = Cursors.Hand;
+            MinimizeButton.FlatStyle = FlatStyle.Flat;
+            MinimizeButton.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            MinimizeButton.IconChar = FontAwesome.Sharp.IconChar.WindowMinimize;
+            MinimizeButton.IconColor = Color.White;
+            MinimizeButton.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            MinimizeButton.IconSize = 20;
+            MinimizeButton.Location = new Point(760, 0);
+            MinimizeButton.Margin = new Padding(5);
+            MinimizeButton.Name = "MinimizeButton";
+            MinimizeButton.Size = new Size(51, 33);
+            MinimizeButton.TabIndex = 4;
+            MinimizeButton.UseVisualStyleBackColor = false;
+            MinimizeButton.Click += MinimizeButton_Click;
             // 
             // FullscreenButton
             // 
-            this.FullscreenButton.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.FullscreenButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.FullscreenButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.FullscreenButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.FullscreenButton.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.FullscreenButton.IconChar = FontAwesome.Sharp.IconChar.SquareFull;
-            this.FullscreenButton.IconColor = System.Drawing.Color.White;
-            this.FullscreenButton.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.FullscreenButton.IconSize = 20;
-            this.FullscreenButton.Location = new System.Drawing.Point(710, 0);
-            this.FullscreenButton.Name = "FullscreenButton";
-            this.FullscreenButton.Size = new System.Drawing.Size(45, 25);
-            this.FullscreenButton.TabIndex = 4;
-            this.FullscreenButton.UseVisualStyleBackColor = false;
-            this.FullscreenButton.Click += new System.EventHandler(this.FullscreenButton_Click);
+            FullscreenButton.BackColor = Color.DeepSkyBlue;
+            FullscreenButton.Cursor = Cursors.Hand;
+            FullscreenButton.Dock = DockStyle.Right;
+            FullscreenButton.FlatStyle = FlatStyle.Flat;
+            FullscreenButton.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            FullscreenButton.IconChar = FontAwesome.Sharp.IconChar.SquareFull;
+            FullscreenButton.IconColor = Color.White;
+            FullscreenButton.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            FullscreenButton.IconSize = 20;
+            FullscreenButton.Location = new Point(812, 0);
+            FullscreenButton.Margin = new Padding(3, 4, 3, 4);
+            FullscreenButton.Name = "FullscreenButton";
+            FullscreenButton.Size = new Size(51, 33);
+            FullscreenButton.TabIndex = 4;
+            FullscreenButton.UseVisualStyleBackColor = false;
+            FullscreenButton.Click += FullscreenButton_Click;
             // 
             // CloseButton
             // 
-            this.CloseButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.CloseButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.CloseButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.CloseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CloseButton.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.CloseButton.IconChar = FontAwesome.Sharp.IconChar.Xmark;
-            this.CloseButton.IconColor = System.Drawing.Color.White;
-            this.CloseButton.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.CloseButton.IconSize = 20;
-            this.CloseButton.Location = new System.Drawing.Point(755, 0);
-            this.CloseButton.Name = "CloseButton";
-            this.CloseButton.Size = new System.Drawing.Size(45, 25);
-            this.CloseButton.TabIndex = 4;
-            this.CloseButton.UseVisualStyleBackColor = false;
-            this.CloseButton.Click += new System.EventHandler(this.CloseButton_Click);
+            CloseButton.BackColor = Color.FromArgb(255, 128, 128);
+            CloseButton.Cursor = Cursors.Hand;
+            CloseButton.Dock = DockStyle.Right;
+            CloseButton.FlatStyle = FlatStyle.Flat;
+            CloseButton.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            CloseButton.IconChar = FontAwesome.Sharp.IconChar.Xmark;
+            CloseButton.IconColor = Color.White;
+            CloseButton.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            CloseButton.IconSize = 20;
+            CloseButton.Location = new Point(863, 0);
+            CloseButton.Margin = new Padding(3, 4, 3, 4);
+            CloseButton.Name = "CloseButton";
+            CloseButton.Size = new Size(51, 33);
+            CloseButton.TabIndex = 4;
+            CloseButton.UseVisualStyleBackColor = false;
+            CloseButton.Click += CloseButton_Click;
             // 
             // DesktopPanel
             // 
-            this.DesktopPanel.BackColor = System.Drawing.Color.White;
-            this.DesktopPanel.Controls.Add(this.pagePanel);
-            this.DesktopPanel.Controls.Add(this.panelSide);
-            this.DesktopPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DesktopPanel.Location = new System.Drawing.Point(0, 25);
-            this.DesktopPanel.Name = "DesktopPanel";
-            this.DesktopPanel.Size = new System.Drawing.Size(800, 470);
-            this.DesktopPanel.TabIndex = 2;
+            DesktopPanel.BackColor = Color.White;
+            DesktopPanel.Controls.Add(pagePanel);
+            DesktopPanel.Controls.Add(panelSide);
+            DesktopPanel.Dock = DockStyle.Fill;
+            DesktopPanel.Location = new Point(0, 33);
+            DesktopPanel.Margin = new Padding(3, 4, 3, 4);
+            DesktopPanel.Name = "DesktopPanel";
+            DesktopPanel.Size = new Size(914, 627);
+            DesktopPanel.TabIndex = 2;
             // 
             // pagePanel
             // 
-            this.pagePanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pagePanel.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.pagePanel.Location = new System.Drawing.Point(170, 0);
-            this.pagePanel.Name = "pagePanel";
-            this.pagePanel.Size = new System.Drawing.Size(630, 470);
-            this.pagePanel.TabIndex = 1;
+            pagePanel.Dock = DockStyle.Fill;
+            pagePanel.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            pagePanel.Location = new Point(194, 0);
+            pagePanel.Margin = new Padding(3, 4, 3, 4);
+            pagePanel.Name = "pagePanel";
+            pagePanel.Size = new Size(720, 627);
+            pagePanel.TabIndex = 1;
+            // 
+            // timer1
+            // 
+            timer1.Tick += timer1_Tick;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 495);
-            this.Controls.Add(this.DesktopPanel);
-            this.Controls.Add(this.panel3);
-            this.Name = "Form1";
-            this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.ResizeEnd += new System.EventHandler(this.Form1_ResizeEnd);
-            this.Resize += new System.EventHandler(this.Form1_Resize);
-            this.panelSide.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            this.panelMenu.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
-            this.DesktopPanel.ResumeLayout(false);
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(914, 660);
+            Controls.Add(DesktopPanel);
+            Controls.Add(panel3);
+            Margin = new Padding(3, 4, 3, 4);
+            Name = "Form1";
+            Text = "меню";
+            FormClosing += Form1_FormClosing;
+            Load += Form1_Load;
+            ResizeEnd += Form1_ResizeEnd;
+            Resize += Form1_Resize;
+            panelSide.ResumeLayout(false);
+            panelLogo.ResumeLayout(false);
+            panelLogo.PerformLayout();
+            panelMenu.ResumeLayout(false);
+            panel3.ResumeLayout(false);
+            DesktopPanel.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         #endregion
 
         private Panel panelSide;
-        private Panel panel2;
+        private Panel panelLogo;
         private FontAwesome.Sharp.IconButton btnMenu;
         private Label label1;
         private Panel panel3;
@@ -358,5 +380,7 @@
         private Panel DesktopPanel;
         private Panel panelMenu;
         private Panel pagePanel;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer timer2;
     }
 }
