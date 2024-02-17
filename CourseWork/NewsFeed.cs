@@ -2,14 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Forms;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using System.IO;
+using static System.Net.WebRequestMethods;
+
 
 namespace CourseWork
 {
@@ -65,7 +62,35 @@ namespace CourseWork
 
 
             // create a button out of fetched data
-            Bitmap image = new Bitmap(Diia.Properties.Resources.Sample);
+            string connectionString = "DefaultEndpointsProtocol=https;AccountName=diiastorage;AccountKey=d9jfXllVwNDqvzWNBr0c2lOKKN3tnkSf3o1ESHH9FhT3Qh/+birYqTO/YHqlqqTsAa77B3TtP5oy+AStWtNKUg==;EndpointSuffix=core.windows.net";
+
+            /*var blobServiceClient = new BlobServiceClient(connectionString);
+
+            BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("photos");
+            Bitmap image = null;
+            foreach (BlobItem blobItem in containerClient.GetBlobs())
+            {
+                var image2 = new Bitmap(blobItem.ToString());
+                image = image2;
+
+            }
+            */
+            var blobServiceClient = new BlobServiceClient(connectionString);
+            BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("photos");
+
+            Bitmap image = null;
+            foreach (BlobItem blobItem in containerClient.GetBlobs())
+            {
+                BlobClient blobClient = containerClient.GetBlobClient(blobItem.Name);
+                using (var stream = new MemoryStream())
+                {
+                    blobClient.DownloadTo(stream);
+                    image = new Bitmap(stream);
+                }
+            }
+
+            createButton(image, "News");
+
             createButton(image, "News");
             createButton(image, "News");
             createButton(image, "News");

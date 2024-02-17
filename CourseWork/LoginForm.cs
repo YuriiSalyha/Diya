@@ -256,6 +256,10 @@ namespace Diia
 
         private bool checkUsername(string name)
         {
+            if (!File.Exists(path))
+            {
+                File.Create(path).Dispose();
+            }
             var lines = File.ReadLines(path);
             foreach (var line in lines)
             {
