@@ -64,17 +64,6 @@ namespace CourseWork
             // create a button out of fetched data
             string connectionString = "DefaultEndpointsProtocol=https;AccountName=diiastorage;AccountKey=d9jfXllVwNDqvzWNBr0c2lOKKN3tnkSf3o1ESHH9FhT3Qh/+birYqTO/YHqlqqTsAa77B3TtP5oy+AStWtNKUg==;EndpointSuffix=core.windows.net";
 
-            /*var blobServiceClient = new BlobServiceClient(connectionString);
-
-            BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("photos");
-            Bitmap image = null;
-            foreach (BlobItem blobItem in containerClient.GetBlobs())
-            {
-                var image2 = new Bitmap(blobItem.ToString());
-                image = image2;
-
-            }
-            */
             var blobServiceClient = new BlobServiceClient(connectionString);
             BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("photos");
 
@@ -88,8 +77,6 @@ namespace CourseWork
                     image = new Bitmap(stream);
                 }
             }
-
-            createButton(image, "News");
 
             createButton(image, "News");
             createButton(image, "News");
