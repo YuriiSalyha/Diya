@@ -5,7 +5,6 @@ namespace DAL
 {
     public class ApplicationDbContext : DbContext
     {
-
         public DbSet<Document> Documents { get; set; }
         public DbSet<News> News { get; set; }
         public DbSet<Password> Passwords { get; set; }
@@ -18,8 +17,7 @@ namespace DAL
         {
             optionsBuilder
                 .UseLazyLoadingProxies()
-                .UseSqlServer(@"DATA SOURCE=DESKTOP-1LHBQ4A\MSSQLSERVERYURA; DATABASE=SageBookEntityDB; UID=sa; PWD=123456789; TrustServerCertificate=True;");
+                .UseSqlServer(@"DATA SOURCE=DESKTOP-1LHBQ4A\MSSQLSERVER01; DATABASE=diiaDatabase; UID=yura; PWD=123; TrustServerCertificate=True;");
         }
-
     }
 }

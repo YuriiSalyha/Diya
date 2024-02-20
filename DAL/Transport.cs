@@ -2,7 +2,7 @@
 {
     public class Transport
     {
-        Guid TransportId { get; set; }
+        public Guid TransportId { get; set; }
         public int TransportType { get; set; }
         public string? Brand { get; set; }
         public string? Model { get; set; }

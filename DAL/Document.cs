@@ -2,7 +2,7 @@
 {
     public class Document
     {
-        Guid DocumentId { get; set; }
+        public Guid DocumentId { get; set; }
         public int DocumentType { get; set; }
         public string DocumentLink { get; set; }
         public virtual Person? Person { get; set; }
