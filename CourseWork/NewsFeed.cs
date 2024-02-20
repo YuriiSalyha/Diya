@@ -6,6 +6,7 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using System.IO;
 using static System.Net.WebRequestMethods;
+using DAL;
 
 
 namespace CourseWork
@@ -20,10 +21,10 @@ namespace CourseWork
             fetchNews();
         }
 
-        private void createButton(Bitmap image, string title) 
+        private void createButton(Bitmap image, string title, string link) 
         {
             CustomImageButton newspage = new CustomImageButton();
-            newspage.Tag = "https://diia.gov.ua/";
+            newspage.Tag = link;
             newspage.BorderRadius = 40;
             newspage.BorderSize = 1;
             newspage.BorderColor = Color.Black;
@@ -55,37 +56,54 @@ namespace CourseWork
 
         private void fetchNews()
         {
-            // get news from DB
-            // .....
-            // .....
-            // .....
-
-
-            // create a button out of fetched data
             string connectionString = "DefaultEndpointsProtocol=https;AccountName=diiastorage;AccountKey=d9jfXllVwNDqvzWNBr0c2lOKKN3tnkSf3o1ESHH9FhT3Qh/+birYqTO/YHqlqqTsAa77B3TtP5oy+AStWtNKUg==;EndpointSuffix=core.windows.net";
 
             var blobServiceClient = new BlobServiceClient(connectionString);
             BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("photos");
 
-            Bitmap image = null;
-            foreach (BlobItem blobItem in containerClient.GetBlobs())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                BlobClient blobClient = containerClient.GetBlobClient(blobItem.Name);
-                using (var stream = new MemoryStream())
-                {
-                    blobClient.DownloadTo(stream);
-                    image = new Bitmap(stream);
-                }
-            }
+                var news = db.News.ToList();
 
-            createButton(image, "News");
-            createButton(image, "News");
-            createButton(image, "News");
-            createButton(image, "News");
-            createButton(image, "News");
-            createButton(image, "News");
-            createButton(image, "News");
-            createButton(image, "News");
+                foreach (var item in news)
+                {
+                    Bitmap image = null;
+
+                    foreach (BlobItem blobItem in containerClient.GetBlobs())
+                    {
+                        if (blobItem.Name.ToString() == item.PhotoName)
+                        {
+                            BlobClient blobClient = containerClient.GetBlobClient(blobItem.Name);
+                            using (var stream = new MemoryStream())
+                            {
+                                blobClient.DownloadTo(stream);
+                                image = new Bitmap(stream);
+                            }
+                            break;
+                        }
+                    }
+
+                    createButton(image, item.NewsTitle, item.NewsLink);
+
+                }
+
+
+                // create a button out of fetched data
+
+
+
+
+
+
+/*                createButton(image, "News");
+                createButton(image, "News");
+                createButton(image, "News");
+                createButton(image, "News");
+                createButton(image, "News");
+                createButton(image, "News");
+                createButton(image, "News");
+                createButton(image, "News");*/
+            }
         }
 
         private void NewsFeed_Resize(object sender, EventArgs e)

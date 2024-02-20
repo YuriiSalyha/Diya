@@ -164,7 +164,9 @@ namespace Diia
         {
             string login = UsernameBox.Text;
             string password = PasswordBox.Text;
+            //
             string id = IdBox.Text;
+            //
             if (registerMode)
             {
                 if (checkRegister())
