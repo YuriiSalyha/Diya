@@ -1,11 +1,6 @@
 ﻿using Diia.CustomComponents;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using System.IO;
-using static System.Net.WebRequestMethods;
 using DAL;
 
 
@@ -87,22 +82,6 @@ namespace CourseWork
 
                 }
 
-
-                // create a button out of fetched data
-
-
-
-
-
-
-/*                createButton(image, "News");
-                createButton(image, "News");
-                createButton(image, "News");
-                createButton(image, "News");
-                createButton(image, "News");
-                createButton(image, "News");
-                createButton(image, "News");
-                createButton(image, "News");*/
             }
         }
 
