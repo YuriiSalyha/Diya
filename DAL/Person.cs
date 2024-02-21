@@ -1,8 +1,4 @@
-﻿using Azure;
-using System;
-using System.Data.SqlTypes;
-
-namespace DAL
+﻿namespace DAL
 {
     public class Person
     {

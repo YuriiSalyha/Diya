@@ -1,6 +1,4 @@
-﻿using System.Reflection.Metadata;
-
-namespace DAL
+﻿namespace DAL
 {
     public class Password
     {
