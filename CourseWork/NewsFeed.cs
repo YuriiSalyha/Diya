@@ -34,10 +34,10 @@ namespace CourseWork
             newspage.Width = NewsPanel.Width / 2; // two panels per row
             //newspage.Width = NewsPanel.Width - 30; // single panel per row
             newspage.Text = title;
-            newspage.TextAlign = ContentAlignment.BottomCenter; // two panels per row
+            newspage.TextAlign = ContentAlignment.TopCenter; // two panels per row
             //newspage.TextAlign = ContentAlignment.MiddleRight; // single panel per row
             newspage.Image = image;
-            newspage.ImageAlign = ContentAlignment.TopCenter; // two panels per row
+            newspage.ImageAlign = ContentAlignment.BottomCenter; // two panels per row
             //newspage.ImageAlign = ContentAlignment.MiddleLeft; // single panel per row
             newspage.Name = title;
             NewsPanel.Controls.Add(newspage);
@@ -59,7 +59,7 @@ namespace CourseWork
             string connectionString = "DefaultEndpointsProtocol=https;AccountName=diiastorage;AccountKey=d9jfXllVwNDqvzWNBr0c2lOKKN3tnkSf3o1ESHH9FhT3Qh/+birYqTO/YHqlqqTsAa77B3TtP5oy+AStWtNKUg==;EndpointSuffix=core.windows.net";
 
             var blobServiceClient = new BlobServiceClient(connectionString);
-            BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("photos");
+            BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("news-photos");
 
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
