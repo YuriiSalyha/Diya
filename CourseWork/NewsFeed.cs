@@ -51,22 +51,33 @@ namespace CourseWork
 
         private void fetchNews()
         {
-            string connectionString = "DefaultEndpointsProtocol=https;AccountName=diiastorage;AccountKey=d9jfXllVwNDqvzWNBr0c2lOKKN3tnkSf3o1ESHH9FhT3Qh/+birYqTO/YHqlqqTsAa77B3TtP5oy+AStWtNKUg==;EndpointSuffix=core.windows.net";
+
+            //add multi thread
+            //
+            //
+
+            string connectionString = "DefaultEndpointsProtocol=" +
+                "https;AccountName=diiastorage;" +
+                "AccountKey=d9jfXllVwNDqvzWNBr0c2lOKKN3tnkSf3o1ES" +
+                "HH9FhT3Qh/+birYqTO/YHqlqqTsAa77B3TtP5oy+AStWtNKUg==;" +
+                "EndpointSuffix=core.windows.net";
+            //conection string to Azure blob
 
             var blobServiceClient = new BlobServiceClient(connectionString);
-            BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("news-photos");
+            BlobContainerClient containerClient = 
+                blobServiceClient.GetBlobContainerClient("news-photos");
 
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 var news = db.News.ToList();
 
-                foreach (var item in news)
+                foreach (var article in news)
                 {
                     Bitmap image = null;
 
-                    foreach (BlobItem blobItem in containerClient.GetBlobs())
+                    /*foreach (BlobItem blobItem in containerClient.GetBlobs())
                     {
-                        if (blobItem.Name.ToString() == item.PhotoName)
+                        if (blobItem.Name.ToString() == article.PhotoName)
                         {
                             BlobClient blobClient = containerClient.GetBlobClient(blobItem.Name);
                             using (var stream = new MemoryStream())
@@ -76,9 +87,23 @@ namespace CourseWork
                             }
                             break;
                         }
+                    }*/
+
+                    //get current photo from blob
+                    /*BlobItem blobItem = 
+                        containerClient.GetBlobs()
+                        .Where(b => b.Name.ToString() == article.PhotoName)
+                        .FirstOrDefault();*/
+                    
+                    
+                    BlobClient blobClient = containerClient.GetBlobClient(article.PhotoName);
+                    using (var stream = new MemoryStream())
+                    {
+                        blobClient.DownloadTo(stream);
+                        image = new Bitmap(stream);
                     }
 
-                    createButton(image, item.NewsTitle, item.NewsLink);
+                    createButton(image, article.NewsTitle, article.NewsLink);
 
                 }
 
