@@ -41,6 +41,7 @@
             panel3 = new Panel();
             iconButton1 = new FontAwesome.Sharp.IconButton();
             CloseButton = new FontAwesome.Sharp.IconButton();
+            PasswordBox2 = new TextBox();
             loginPanel.SuspendLayout();
             panel3.SuspendLayout();
             SuspendLayout();
@@ -50,6 +51,7 @@
             loginPanel.BackColor = Color.Transparent;
             loginPanel.BackgroundImage = Properties.Resources.Sample;
             loginPanel.BackgroundImageLayout = ImageLayout.Stretch;
+            loginPanel.Controls.Add(PasswordBox2);
             loginPanel.Controls.Add(CitizenError);
             loginPanel.Controls.Add(UsernameBox);
             loginPanel.Controls.Add(CredentialError);
@@ -72,7 +74,7 @@
             CitizenError.AutoSize = true;
             CitizenError.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             CitizenError.ForeColor = Color.Red;
-            CitizenError.Location = new Point(346, 243);
+            CitizenError.Location = new Point(297, 243);
             CitizenError.Name = "CitizenError";
             CitizenError.Size = new Size(315, 20);
             CitizenError.TabIndex = 11;
@@ -93,19 +95,21 @@
             // 
             CredentialError.AutoSize = true;
             CredentialError.ForeColor = Color.Red;
-            CredentialError.Location = new Point(346, 231);
+            CredentialError.Location = new Point(369, 231);
             CredentialError.Name = "CredentialError";
             CredentialError.Size = new Size(169, 20);
             CredentialError.TabIndex = 9;
             CredentialError.Text = "Incorrect id or password";
+            CredentialError.TextAlign = ContentAlignment.TopCenter;
             CredentialError.Visible = false;
+            CredentialError.Click += CredentialError_Click;
             // 
             // PasswordError
             // 
             PasswordError.AutoSize = true;
             PasswordError.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             PasswordError.ForeColor = Color.Red;
-            PasswordError.Location = new Point(346, 301);
+            PasswordError.Location = new Point(279, 290);
             PasswordError.Name = "PasswordError";
             PasswordError.Size = new Size(404, 40);
             PasswordError.TabIndex = 8;
@@ -130,7 +134,7 @@
             UnderText.Cursor = Cursors.Hand;
             UnderText.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             UnderText.ForeColor = Color.White;
-            UnderText.Location = new Point(327, 395);
+            UnderText.Location = new Point(327, 441);
             UnderText.Name = "UnderText";
             UnderText.Size = new Size(285, 20);
             UnderText.TabIndex = 6;
@@ -147,7 +151,7 @@
             ConfirmButton.FlatAppearance.BorderSize = 0;
             ConfirmButton.FlatStyle = FlatStyle.Flat;
             ConfirmButton.ForeColor = Color.White;
-            ConfirmButton.Location = new Point(346, 343);
+            ConfirmButton.Location = new Point(346, 389);
             ConfirmButton.Margin = new Padding(3, 4, 3, 4);
             ConfirmButton.Name = "ConfirmButton";
             ConfirmButton.Size = new Size(210, 48);
@@ -229,6 +233,14 @@
             CloseButton.UseVisualStyleBackColor = false;
             CloseButton.Click += CloseButton_Click;
             // 
+            // PasswordBox2
+            // 
+            PasswordBox2.Location = new Point(346, 333);
+            PasswordBox2.Name = "PasswordBox2";
+            PasswordBox2.PlaceholderText = "Repeat password";
+            PasswordBox2.Size = new Size(210, 27);
+            PasswordBox2.TabIndex = 12;
+            // 
             // LoginForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -265,5 +277,6 @@
         private Label CredentialError;
         private Label CitizenError;
         private TextBox UsernameBox;
+        private TextBox PasswordBox2;
     }
 }

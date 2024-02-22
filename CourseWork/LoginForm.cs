@@ -163,6 +163,8 @@ namespace Diia
 
         private void ConfirmButton_Click(object sender, EventArgs e)
         {
+            // hadle register and login button
+
             string taxPayerNumber = IdBox.Text;
             string password = PasswordBox.Text;
             string username = UsernameBox.Text;
@@ -172,12 +174,17 @@ namespace Diia
 
                 if (checkTaxPayerNumber(taxPayerNumber))
                 {
+                    //numbers limited by size of procedure's parameters
                     if (taxPayerNumber.Length == 10 && username.Length < 16
-                        && password.Length <= 10 && password.Length >= 6)
+                        && password.Length <= 10 && password.Length >= 6
+                        && PasswordBox.Text == PasswordBox2.Text)
                     {
-
                         createAccount(taxPayerNumber, password, username);
                         registerMode = false;
+                        updateMode();
+                        IdBox.Clear();
+                        PasswordBox.Clear();
+                        UsernameBox.Clear();
                     }
                 }
                 /*if ()
@@ -205,7 +212,6 @@ namespace Diia
                     CredentialError.Visible = false;
                     this.DialogResult = DialogResult.OK;
                     this.Close();
-
                 }
                 else
                 {
@@ -231,6 +237,7 @@ namespace Diia
 
         private bool checkTaxPayerNumber(string taxPayerNumber)
         {
+            // verify that number exist and have no related account yet
             bool result = false;
 
             using (var db = new ApplicationDbContext())
@@ -244,7 +251,7 @@ namespace Diia
                 {
                     MessageBox.Show("This tax payer number don't exist or already taken");
                 }
-                
+
             }
             return result;
         }
@@ -255,51 +262,51 @@ namespace Diia
             bool id = true;
 
 
-            if(!checkUsername(IdBox.Text))
+            if (!checkUsername(IdBox.Text))
             {
                 UsernameError.Text = "Username is already taken";
                 UsernameError.Visible = true;
                 username = false;
             }
-            else if(IdBox.Text.Length < 8) 
+            else if (IdBox.Text.Length < 8)
             {
                 UsernameError.Text = "Username length should be at least 8 characters long";
                 UsernameError.Visible = true;
                 username = false;
             }
-            else 
+            else
             {
                 UsernameError.Visible = false;
             }
 
-            if(PasswordBox.Text.Length < 8 || !checkPassword(PasswordBox.Text)) 
+            if (PasswordBox.Text.Length < 8 || !checkPassword(PasswordBox.Text))
             {
                 PasswordError.Visible = true;
                 password = false;
             }
-            else 
+            else
             {
                 PasswordError.Visible = false;
             }
 
-            if (UsernameBox.Text.Length < 1) 
+            if (UsernameBox.Text.Length < 1)
             {
                 CitizenError.Text = "Please enter an citizen ID";
                 CitizenError.Visible = true;
                 id = false;
             }
-            else if (!checkID(UsernameBox.Text)) 
+            else if (!checkID(UsernameBox.Text))
             {
                 CitizenError.Text = "This citizen ID is already registered";
                 CitizenError.Visible = true;
                 id = false;
             }
-            else 
+            else
             {
                 CitizenError.Visible = false;
             }
             return (username && password && id);
-            
+
         }
 
         private bool checkUsername(string name)
@@ -334,12 +341,12 @@ namespace Diia
             return true;
         }
 
-        private bool checkID(string id) 
+        private bool checkID(string id)
         {
             var lines = File.ReadLines(path);
             foreach (var line in lines)
             {
-                if (line.Split(';').ToList()[2] == id) 
+                if (line.Split(';').ToList()[2] == id)
                 {
                     return false;
                 }
@@ -352,6 +359,7 @@ namespace Diia
 
         private void createAccount(string taxPayerNumber, string password, string username)
         {
+            // call for stored procedure in database
             string storedProcedureName = "AddPerson";
             string parameter1Value = username;
             string parameter2Value = password;
@@ -451,8 +459,9 @@ namespace Diia
             if (registerMode)
             {
                 ConfirmButton.Text = "Sign Up";
-                UnderText.Text = "Already have an account? Sign in";
+                UnderText.Text = "Already have an account? Log in";
                 UsernameBox.Visible = true;
+                PasswordBox2.Visible = true;
                 CitizenError.Visible = false;
                 PasswordError.Visible = false;
                 UsernameError.Visible = false;
@@ -460,14 +469,20 @@ namespace Diia
             }
             else
             {
-                ConfirmButton.Text = "Sign in";
+                ConfirmButton.Text = "Log in";
                 UnderText.Text = "Don't have an account? Sign Up";
                 UsernameBox.Visible = false;
+                PasswordBox2.Visible = false;
                 CitizenError.Visible = false;
                 PasswordError.Visible = false;
                 UsernameError.Visible = false;
                 CredentialError.Visible = false;
             }
+        }
+
+        private void CredentialError_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
