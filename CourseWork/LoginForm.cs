@@ -1,5 +1,15 @@
-﻿using Newtonsoft.Json;
+﻿using DAL;
+using DAL.Migrations;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic.Logging;
+using Newtonsoft.Json;
+using System.Data;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Text;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace Diia
 {
@@ -7,9 +17,12 @@ namespace Diia
     {
         bool registerMode = false;
 
+        //
         string path = System.IO.Path.Combine(Environment.CurrentDirectory, "Logins.txt");
-
+        //
         string configPath = System.IO.Path.Combine(Environment.CurrentDirectory, "config.json");
+        //
+
         private int borderSize = 2;
         Size formSize;
         public LoginForm()
@@ -150,14 +163,28 @@ namespace Diia
 
         private void ConfirmButton_Click(object sender, EventArgs e)
         {
-            string login = UsernameBox.Text;
+            string taxPayerNumber = IdBox.Text;
             string password = PasswordBox.Text;
-            //
-            string id = IdBox.Text;
-            //
+            string username = UsernameBox.Text;
+
             if (registerMode)
             {
-                if (checkRegister())
+
+                if (checkTaxPayerNumber(taxPayerNumber))
+                {
+                    if (taxPayerNumber.Length == 10 && username.Length < 16
+                        && password.Length <= 10 && password.Length >= 6)
+                    {
+
+                        createAccount(taxPayerNumber, password, username);
+                        registerMode = false;
+                    }
+                }
+                /*if ()
+                {
+
+                }*/
+                /*if (checkRegister())
                 {
                     registerMode = false;
 
@@ -169,11 +196,22 @@ namespace Diia
 
                     this.DialogResult = DialogResult.OK;
                     this.Close();
-                }
+                }*/
             }
             else
             {
-                bool loginStatus = checkCredentials(login, password);
+                if (credentialDataBaseCheck(taxPayerNumber, password))
+                {
+                    CredentialError.Visible = false;
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+
+                }
+                else
+                {
+                    CredentialError.Visible = true;
+                }
+                /*bool loginStatus = checkCredentials(login, password);
 
                 if (loginStatus)
                 {
@@ -184,12 +222,32 @@ namespace Diia
                 else
                 {
                     CredentialError.Visible = true;
-                }
+                }*/
             }
         }
 
 
         #region RegCheck
+
+        private bool checkTaxPayerNumber(string taxPayerNumber)
+        {
+            bool result = false;
+
+            using (var db = new ApplicationDbContext())
+            {
+                var currentUser = db.TaxPayerCards.Where(card => card.Number == taxPayerNumber).ToList();
+                if (currentUser.Any() && currentUser.FirstOrDefault().Person == null)
+                {
+                    result = true;
+                }
+                else
+                {
+                    MessageBox.Show("This tax payer number don't exist or already taken");
+                }
+                
+            }
+            return result;
+        }
         private bool checkRegister()
         {
             bool username = true;
@@ -197,13 +255,13 @@ namespace Diia
             bool id = true;
 
 
-            if(!checkUsername(UsernameBox.Text))
+            if(!checkUsername(IdBox.Text))
             {
                 UsernameError.Text = "Username is already taken";
                 UsernameError.Visible = true;
                 username = false;
             }
-            else if(UsernameBox.Text.Length < 8) 
+            else if(IdBox.Text.Length < 8) 
             {
                 UsernameError.Text = "Username length should be at least 8 characters long";
                 UsernameError.Visible = true;
@@ -224,13 +282,13 @@ namespace Diia
                 PasswordError.Visible = false;
             }
 
-            if (IdBox.Text.Length < 1) 
+            if (UsernameBox.Text.Length < 1) 
             {
                 CitizenError.Text = "Please enter an citizen ID";
                 CitizenError.Visible = true;
                 id = false;
             }
-            else if (!checkID(IdBox.Text)) 
+            else if (!checkID(UsernameBox.Text)) 
             {
                 CitizenError.Text = "This citizen ID is already registered";
                 CitizenError.Visible = true;
@@ -291,6 +349,74 @@ namespace Diia
         #endregion
 
         #region LogCheck
+
+        private void createAccount(string taxPayerNumber, string password, string username)
+        {
+            string storedProcedureName = "AddPerson";
+            string parameter1Value = username;
+            string parameter2Value = password;
+            string parameter3Value = taxPayerNumber;
+            using (var db = new ApplicationDbContext())
+            {
+                var result = db.Database.ExecuteSqlRaw($"EXEC {storedProcedureName} @Parameter1, @Parameter2, @Parameter3",
+                    new SqlParameter("@Parameter1", parameter1Value),
+                    new SqlParameter("@Parameter2", parameter2Value),
+                    new SqlParameter("@Parameter3", parameter3Value));
+            }
+        }
+        private bool credentialDataBaseCheck(string taxPayerNumber, string password)
+        {
+            // check by tax payer number if user exists and if he have already account
+            bool result = false;
+
+            using (var db = new ApplicationDbContext())
+            {
+                var currentUser = db.TaxPayerCards.Where(p => p.Number == taxPayerNumber).ToList();
+
+                if (currentUser.Any() && currentUser.FirstOrDefault().Person != null)
+                {
+                    string passwordHash = currentUser.FirstOrDefault().Person.Password.FirstOrDefault().PasswordHash;
+                    string passwordSalt = currentUser.FirstOrDefault().Person.Password.FirstOrDefault().PasswordSalt;
+
+                    string passwordWithSalt = passwordSalt + password;
+
+                    string currentHash = Hash(passwordWithSalt);
+
+
+                    if (currentHash == passwordHash)
+                    {
+                        CurrentUserTaxPayerNumber.TaxPayerNumber = currentUser.FirstOrDefault().Number;
+                        result = true;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public string Hash(string input)
+        {
+            using (SHA256 hasher = SHA256.Create())
+            {
+                // Convert the input string to a byte array and compute the hash.
+                byte[] data = hasher.ComputeHash(Encoding.Unicode.GetBytes(input));
+
+                // Create a new Stringbuilder to collect the bytes
+                // and create a string.
+                StringBuilder sBuilder = new StringBuilder();
+
+                // Loop through each byte of the hashed data 
+                // and format each one as a hexadecimal string.
+                for (int i = 0; i < data.Length; i++)
+                {
+                    sBuilder.Append(data[i].ToString("X2"));
+                }
+
+                // Return the hexadecimal string.
+                return sBuilder.ToString();
+            }
+        }
+
         private bool checkCredentials(string usr, string pwd)
         {
 
@@ -326,7 +452,7 @@ namespace Diia
             {
                 ConfirmButton.Text = "Sign Up";
                 UnderText.Text = "Already have an account? Sign in";
-                IdBox.Visible = true;
+                UsernameBox.Visible = true;
                 CitizenError.Visible = false;
                 PasswordError.Visible = false;
                 UsernameError.Visible = false;
@@ -336,7 +462,7 @@ namespace Diia
             {
                 ConfirmButton.Text = "Sign in";
                 UnderText.Text = "Don't have an account? Sign Up";
-                IdBox.Visible = false;
+                UsernameBox.Visible = false;
                 CitizenError.Visible = false;
                 PasswordError.Visible = false;
                 UsernameError.Visible = false;

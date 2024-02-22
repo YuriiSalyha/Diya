@@ -30,14 +30,14 @@
         {
             loginPanel = new Panel();
             CitizenError = new Label();
-            IdBox = new TextBox();
+            UsernameBox = new TextBox();
             CredentialError = new Label();
             PasswordError = new Label();
             UsernameError = new Label();
             UnderText = new Label();
             ConfirmButton = new CustomComponents.CustomImageButton();
             PasswordBox = new TextBox();
-            UsernameBox = new TextBox();
+            IdBox = new TextBox();
             panel3 = new Panel();
             iconButton1 = new FontAwesome.Sharp.IconButton();
             CloseButton = new FontAwesome.Sharp.IconButton();
@@ -51,14 +51,14 @@
             loginPanel.BackgroundImage = Properties.Resources.Sample;
             loginPanel.BackgroundImageLayout = ImageLayout.Stretch;
             loginPanel.Controls.Add(CitizenError);
-            loginPanel.Controls.Add(IdBox);
+            loginPanel.Controls.Add(UsernameBox);
             loginPanel.Controls.Add(CredentialError);
             loginPanel.Controls.Add(PasswordError);
             loginPanel.Controls.Add(UsernameError);
             loginPanel.Controls.Add(UnderText);
             loginPanel.Controls.Add(ConfirmButton);
             loginPanel.Controls.Add(PasswordBox);
-            loginPanel.Controls.Add(UsernameBox);
+            loginPanel.Controls.Add(IdBox);
             loginPanel.Controls.Add(panel3);
             loginPanel.Dock = DockStyle.Fill;
             loginPanel.Location = new Point(0, 0);
@@ -72,32 +72,32 @@
             CitizenError.AutoSize = true;
             CitizenError.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             CitizenError.ForeColor = Color.Red;
-            CitizenError.Location = new Point(346, 168);
+            CitizenError.Location = new Point(346, 243);
             CitizenError.Name = "CitizenError";
             CitizenError.Size = new Size(315, 20);
             CitizenError.TabIndex = 11;
             CitizenError.Text = "This citizen ID is already registered";
             CitizenError.Visible = false;
             // 
-            // IdBox
+            // UsernameBox
             // 
-            IdBox.Location = new Point(346, 133);
-            IdBox.Margin = new Padding(3, 4, 3, 4);
-            IdBox.Name = "IdBox";
-            IdBox.PlaceholderText = "Citizen ID";
-            IdBox.Size = new Size(210, 27);
-            IdBox.TabIndex = 10;
-            IdBox.Visible = false;
+            UsernameBox.Location = new Point(346, 133);
+            UsernameBox.Margin = new Padding(3, 4, 3, 4);
+            UsernameBox.Name = "UsernameBox";
+            UsernameBox.PlaceholderText = "Username";
+            UsernameBox.Size = new Size(210, 27);
+            UsernameBox.TabIndex = 10;
+            UsernameBox.Visible = false;
             // 
             // CredentialError
             // 
             CredentialError.AutoSize = true;
             CredentialError.ForeColor = Color.Red;
-            CredentialError.Location = new Point(346, 180);
+            CredentialError.Location = new Point(346, 231);
             CredentialError.Name = "CredentialError";
-            CredentialError.Size = new Size(220, 20);
+            CredentialError.Size = new Size(169, 20);
             CredentialError.TabIndex = 9;
-            CredentialError.Text = "Incorrect username or password";
+            CredentialError.Text = "Incorrect id or password";
             CredentialError.Visible = false;
             // 
             // PasswordError
@@ -117,7 +117,7 @@
             UsernameError.AutoSize = true;
             UsernameError.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             UsernameError.ForeColor = Color.Red;
-            UsernameError.Location = new Point(346, 235);
+            UsernameError.Location = new Point(346, 160);
             UsernameError.Name = "UsernameError";
             UsernameError.Size = new Size(238, 20);
             UsernameError.TabIndex = 7;
@@ -168,15 +168,15 @@
             PasswordBox.Size = new Size(210, 27);
             PasswordBox.TabIndex = 4;
             // 
-            // UsernameBox
+            // IdBox
             // 
-            UsernameBox.Cursor = Cursors.IBeam;
-            UsernameBox.Location = new Point(346, 200);
-            UsernameBox.Margin = new Padding(3, 4, 3, 4);
-            UsernameBox.Name = "UsernameBox";
-            UsernameBox.PlaceholderText = "Username";
-            UsernameBox.Size = new Size(210, 27);
-            UsernameBox.TabIndex = 3;
+            IdBox.Cursor = Cursors.IBeam;
+            IdBox.Location = new Point(346, 200);
+            IdBox.Margin = new Padding(3, 4, 3, 4);
+            IdBox.Name = "IdBox";
+            IdBox.PlaceholderText = "Citizen ID";
+            IdBox.Size = new Size(210, 27);
+            IdBox.TabIndex = 3;
             // 
             // panel3
             // 
@@ -257,13 +257,13 @@
         private FontAwesome.Sharp.IconButton CloseButton;
         private FontAwesome.Sharp.IconButton iconButton1;
         private TextBox PasswordBox;
-        private TextBox UsernameBox;
+        private TextBox IdBox;
         private CustomComponents.CustomImageButton ConfirmButton;
         private Label UnderText;
         private Label PasswordError;
         private Label UsernameError;
         private Label CredentialError;
         private Label CitizenError;
-        private TextBox IdBox;
+        private TextBox UsernameBox;
     }
 }
