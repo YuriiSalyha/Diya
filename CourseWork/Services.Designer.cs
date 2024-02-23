@@ -28,33 +28,71 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.SuspendLayout();
+            label1 = new Label();
+            buttonAddCar = new Button();
+            AddDocuments = new Button();
+            seeRealEstate = new Button();
+            SuspendLayout();
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(49, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Services";
+            label1.AutoSize = true;
+            label1.Location = new Point(14, 12);
+            label1.Name = "label1";
+            label1.Size = new Size(62, 20);
+            label1.TabIndex = 0;
+            label1.Text = "Services";
+            // 
+            // buttonAddCar
+            // 
+            buttonAddCar.Location = new Point(80, 123);
+            buttonAddCar.Name = "buttonAddCar";
+            buttonAddCar.Size = new Size(160, 78);
+            buttonAddCar.TabIndex = 1;
+            buttonAddCar.Text = "Add car";
+            buttonAddCar.UseVisualStyleBackColor = true;
+            buttonAddCar.Click += buttonAddCar_Click;
+            // 
+            // AddDocuments
+            // 
+            AddDocuments.Location = new Point(443, 123);
+            AddDocuments.Name = "AddDocuments";
+            AddDocuments.Size = new Size(160, 78);
+            AddDocuments.TabIndex = 3;
+            AddDocuments.Text = "Add document";
+            AddDocuments.UseVisualStyleBackColor = true;
+            // 
+            // seeRealEstate
+            // 
+            seeRealEstate.Location = new Point(266, 123);
+            seeRealEstate.Name = "seeRealEstate";
+            seeRealEstate.Size = new Size(155, 78);
+            seeRealEstate.TabIndex = 4;
+            seeRealEstate.Text = "See real estate";
+            seeRealEstate.UseVisualStyleBackColor = true;
+            seeRealEstate.Click += seeRealEstate_Click;
             // 
             // Services
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(630, 470);
-            this.Controls.Add(this.label1);
-            this.Name = "Services";
-            this.Text = "Services";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(720, 627);
+            Controls.Add(seeRealEstate);
+            Controls.Add(AddDocuments);
+            Controls.Add(buttonAddCar);
+            Controls.Add(label1);
+            Margin = new Padding(3, 4, 3, 4);
+            Name = "Services";
+            Text = "Services";
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private Label label1;
+        private Button buttonAddCar;
+        private Button AddDocuments;
+        private Button seeRealEstate;
     }
 }

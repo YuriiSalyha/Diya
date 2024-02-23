@@ -28,33 +28,45 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.SuspendLayout();
+            label1 = new Label();
+            button1 = new Button();
+            SuspendLayout();
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Menu";
+            label1.AutoSize = true;
+            label1.Location = new Point(14, 12);
+            label1.Name = "label1";
+            label1.Size = new Size(46, 20);
+            label1.TabIndex = 0;
+            label1.Text = "Menu";
+            // 
+            // button1
+            // 
+            button1.Location = new Point(195, 89);
+            button1.Name = "button1";
+            button1.Size = new Size(162, 79);
+            button1.TabIndex = 1;
+            button1.Text = "Change password";
+            button1.UseVisualStyleBackColor = true;
             // 
             // Menu
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(630, 470);
-            this.Controls.Add(this.label1);
-            this.Name = "Menu";
-            this.Text = "Menu";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(720, 627);
+            Controls.Add(button1);
+            Controls.Add(label1);
+            Margin = new Padding(3, 4, 3, 4);
+            Name = "Menu";
+            Text = "Menu";
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private Label label1;
+        private Button button1;
     }
 }
