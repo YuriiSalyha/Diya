@@ -1,9 +1,24 @@
-﻿using Diia.CustomComponents;
+﻿using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using DAL;
+using Diia;
+using Diia.CustomComponents;
+using System.Drawing.Text;
 
 namespace CourseWork
 {
     public partial class Documents : Form
     {
+        List<string> documentTypes = new List<string>
+        {
+            "Id Card",
+            "Passport",
+            "Birth certificate",
+            "Student card",
+            "Driver license",
+            "Pension certificate"
+        };
+
         public Documents()
         {
             InitializeComponent();
@@ -34,25 +49,77 @@ namespace CourseWork
         private void ClickHandler(object? sender, EventArgs e)
         {
             Button btn = sender as Button;
-            //MessageBox.Show("123");
         }
 
 
 
         private void fetchDocs() 
         {
-                    // get docs from DB
-                    // .....
-                    // .....
-                    // .....
+            string connectionString = "DefaultEndpointsProtocol=https;" +
+                "AccountName=diiastorage;" +
+                "AccountKey=d9jfXllVwNDqvzWNBr0c2lOKKN3tnkSf3o1E" +
+                "SHH9FhT3Qh/+birYqTO/YHqlqqTsAa77B3TtP5oy+AStWtNKUg==;" +
+                "EndpointSuffix=core.windows.net";
+            //conection string to Azure blob
+
+            var blobServiceClient = new BlobServiceClient(connectionString);
+            BlobContainerClient containerClient =
+                blobServiceClient.GetBlobContainerClient("documents");
+
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
 
 
-                    // create a button out of fetched data
-                    Bitmap image = new Bitmap(Diia.Properties.Resources.Sample);
-                    createButton(image, "Doc");
-                    createButton(image, "Doc");
-                    createButton(image, "Doc");
-                    createButton(image, "Doc");
+                // temporary
+                var currentUser = db.TaxPayerCards.Where(d => d.Number == CurrentUserTaxPayerNumber.TaxPayerNumber).FirstOrDefault().Person;
+
+                var documents = db.Documents
+                    .Where(
+                        documenet => documenet.Person.TaxPayerCard.FirstOrDefault().Number
+                            == CurrentUserTaxPayerNumber.TaxPayerNumber
+                    );
+
+
+                /*Guid currentUserId;
+                if (currentUser != null)
+                {
+                    currentUser = currentUser.PersonId;
+                }
+                var documents2 = db.Documents.Where(d => d.Person.PersonId == currentUserId);*/
+                if (documents.Any())
+                {
+
+
+                    foreach (var document in documents)
+                    {
+                        Bitmap image = null;
+
+                        //documentLink it is name of document photo
+                        /*BlobItem blobItem = containerClient.GetBlobs()
+                            .Where(d => d.Name.ToString() == document.DocumentLink).FirstOrDefault();*/
+
+                        //BlobClient blobClient = containerClient.GetBlobClient(document.DocumentLink);
+
+                        //MessageBox.Show(document.DocumentLink);
+                        BlobClient blobClient = containerClient.GetBlobClient(document.DocumentLink);
+
+                        
+
+                        using (var stream = new MemoryStream())
+                        {
+                            blobClient.DownloadTo(stream);
+                            image = new Bitmap(stream);
+                        }
+
+                        createButton(image, documentTypes[document.DocumentType]);
+
+
+                    }
+                }
+
+            }
+
+
         }
 
         private void Documents_Resize(object sender, EventArgs e)
