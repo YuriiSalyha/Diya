@@ -24,10 +24,10 @@ namespace CourseWork
             InitializeComponent();
             AdjustItems();
             DocPanel.AutoScroll = true;
-            fetchDocs();
+            fetchDocsAsync();
         }
 
-        private void createButton(Bitmap image, string title)
+        private async void createButtonAsync(Bitmap image, string title)
         {
             CustomImageButton docpage = new CustomImageButton();
             
@@ -42,19 +42,25 @@ namespace CourseWork
             docpage.Image = image;
             docpage.ImageAlign = ContentAlignment.TopCenter; 
             docpage.Name = title;
-            DocPanel.Controls.Add(docpage);
-            docpage.Click += new EventHandler(ClickHandler);
+
+
+            if (DocPanel.InvokeRequired)
+            {
+                DocPanel.Invoke((MethodInvoker)delegate
+                {
+                    DocPanel.Controls.Add(docpage);
+                });
+            }
+            else
+            {
+                DocPanel.Controls.Add(docpage);
+            }
         }
 
-        private void ClickHandler(object? sender, EventArgs e)
+
+        private async void fetchDocsAsync() 
         {
-            Button btn = sender as Button;
-        }
 
-
-
-        private void fetchDocs() 
-        {
             string connectionString = "DefaultEndpointsProtocol=https;" +
                 "AccountName=diiastorage;" +
                 "AccountKey=d9jfXllVwNDqvzWNBr0c2lOKKN3tnkSf3o1E" +
@@ -69,54 +75,31 @@ namespace CourseWork
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
 
-
-                // temporary
-                var currentUser = db.TaxPayerCards.Where(d => d.Number == CurrentUserTaxPayerNumber.TaxPayerNumber).FirstOrDefault().Person;
-
                 var documents = db.Documents
                     .Where(
                         documenet => documenet.Person.TaxPayerCard.FirstOrDefault().Number
                             == CurrentUserTaxPayerNumber.TaxPayerNumber
                     );
 
-
-                /*Guid currentUserId;
-                if (currentUser != null)
-                {
-                    currentUser = currentUser.PersonId;
-                }
-                var documents2 = db.Documents.Where(d => d.Person.PersonId == currentUserId);*/
                 if (documents.Any())
                 {
 
 
-                    foreach (var document in documents)
+                    Parallel.ForEach(documents, async document =>
                     {
                         Bitmap image = null;
-
-                        //documentLink it is name of document photo
-                        /*BlobItem blobItem = containerClient.GetBlobs()
-                            .Where(d => d.Name.ToString() == document.DocumentLink).FirstOrDefault();*/
-
-                        //BlobClient blobClient = containerClient.GetBlobClient(document.DocumentLink);
-
-                        //MessageBox.Show(document.DocumentLink);
                         BlobClient blobClient = containerClient.GetBlobClient(document.DocumentLink);
-
-                        
 
                         using (var stream = new MemoryStream())
                         {
-                            blobClient.DownloadTo(stream);
+                            await blobClient.DownloadToAsync(stream);
                             image = new Bitmap(stream);
                         }
 
-                        createButton(image, documentTypes[document.DocumentType]);
+                        createButtonAsync(image, documentTypes[document.DocumentType]);
 
-
-                    }
+                    });
                 }
-
             }
 
 

@@ -1,5 +1,6 @@
 ﻿using Diia.CustomComponents;
 using Azure.Storage.Blobs;
+using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
 using DAL;
 
@@ -13,10 +14,10 @@ namespace CourseWork
             InitializeComponent();
             AdjustItems();
             NewsPanel.AutoScroll = true;
-            fetchNews();
+            fetchNewsAsync();
         }
 
-        private void createButton(Bitmap image, string title, string link) 
+        private async void createButtonAsync(Bitmap image, string title, string link) 
         {
             CustomImageButton newspage = new CustomImageButton();
             newspage.Tag = link;
@@ -26,7 +27,7 @@ namespace CourseWork
             newspage.ForeColor = Color.Black;
             newspage.Height = 300; // two panels per row
             //newspage.Height = 250; // single panel per row
-            newspage.Width = NewsPanel.Width / 2; // two panels per row
+            newspage.Width = (NewsPanel.Width / 2) - 10; // two panels per row
             //newspage.Width = NewsPanel.Width - 30; // single panel per row
             newspage.Text = title;
             newspage.TextAlign = ContentAlignment.TopCenter; // two panels per row
@@ -35,9 +36,30 @@ namespace CourseWork
             newspage.ImageAlign = ContentAlignment.BottomCenter; // two panels per row
             //newspage.ImageAlign = ContentAlignment.MiddleLeft; // single panel per row
             newspage.Name = title;
-            NewsPanel.Controls.Add(newspage);
-            newspage.Click += new EventHandler(ClickHandler);
+
+
+            NewsPanel.Invoke((MethodInvoker)delegate
+            {
+                NewsPanel.Controls.Add(newspage);
+                newspage.Click += new EventHandler(ClickHandler);
+            });
+            /*if (NewsPanel.InvokeRequired)
+            {
+                NewsPanel.Invoke((MethodInvoker)delegate
+                {
+                    NewsPanel.Controls.Add(newspage);
+                    newspage.Click += new EventHandler(ClickHandler);
+                });
+            }
+            else
+            {
+                NewsPanel.Controls.Add(newspage);
+                newspage.Click += new EventHandler(ClickHandler);
+            }*/
         }
+
+
+
 
         private void ClickHandler(object? sender, EventArgs e) 
         {
@@ -49,13 +71,8 @@ namespace CourseWork
             System.Diagnostics.Process.Start(psi);
         }
 
-        private void fetchNews()
+        private async void fetchNewsAsync()
         {
-
-            //add multi thread
-            //
-            //
-
             string connectionString = "DefaultEndpointsProtocol=" +
                 "https;AccountName=diiastorage;" +
                 "AccountKey=d9jfXllVwNDqvzWNBr0c2lOKKN3tnkSf3o1ES" +
@@ -71,41 +88,21 @@ namespace CourseWork
             {
                 var news = db.News.ToList();
 
-                foreach (var article in news)
+                Parallel.ForEach(news, async article =>
                 {
-                    Bitmap image = null;
+                    Bitmap image = null;                  
 
-                    /*foreach (BlobItem blobItem in containerClient.GetBlobs())
-                    {
-                        if (blobItem.Name.ToString() == article.PhotoName)
-                        {
-                            BlobClient blobClient = containerClient.GetBlobClient(blobItem.Name);
-                            using (var stream = new MemoryStream())
-                            {
-                                blobClient.DownloadTo(stream);
-                                image = new Bitmap(stream);
-                            }
-                            break;
-                        }
-                    }*/
-
-                    //get current photo from blob
-                    /*BlobItem blobItem = 
-                        containerClient.GetBlobs()
-                        .Where(b => b.Name.ToString() == article.PhotoName)
-                        .FirstOrDefault();*/
-                    
-                    
                     BlobClient blobClient = containerClient.GetBlobClient(article.PhotoName);
+
                     using (var stream = new MemoryStream())
                     {
-                        blobClient.DownloadTo(stream);
+                        await blobClient.DownloadToAsync(stream);
                         image = new Bitmap(stream);
                     }
 
-                    createButton(image, article.NewsTitle, article.NewsLink);
+                    createButtonAsync(image, article.NewsTitle, article.NewsLink);
 
-                }
+                });
 
             }
         }
