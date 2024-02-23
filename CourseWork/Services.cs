@@ -23,5 +23,10 @@ namespace CourseWork
 
             seeRealEstateForm.Show();
         }
+
+        private void AddDocuments_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

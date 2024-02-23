@@ -61,6 +61,7 @@
             AddDocuments.TabIndex = 3;
             AddDocuments.Text = "Add document";
             AddDocuments.UseVisualStyleBackColor = true;
+            AddDocuments.Click += AddDocuments_Click;
             // 
             // seeRealEstate
             // 

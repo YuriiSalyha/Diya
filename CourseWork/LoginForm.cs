@@ -410,8 +410,7 @@ namespace Diia
                 // Convert the input string to a byte array and compute the hash.
                 byte[] data = hasher.ComputeHash(Encoding.Unicode.GetBytes(input));
 
-                // Create a new Stringbuilder to collect the bytes
-                // and create a string.
+
                 StringBuilder sBuilder = new StringBuilder();
 
                 // Loop through each byte of the hashed data 
