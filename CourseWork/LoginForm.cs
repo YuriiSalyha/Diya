@@ -28,6 +28,7 @@ namespace Diia
         public LoginForm()
         {
             InitializeComponent();
+            updateMode();
             this.Padding = new Padding(borderSize); // Border size
             this.BackColor = Color.Black; // Border color            
         }
