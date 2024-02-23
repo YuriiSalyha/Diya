@@ -38,12 +38,7 @@ namespace CourseWork
             newspage.Name = title;
 
 
-            NewsPanel.Invoke((MethodInvoker)delegate
-            {
-                NewsPanel.Controls.Add(newspage);
-                newspage.Click += new EventHandler(ClickHandler);
-            });
-            /*if (NewsPanel.InvokeRequired)
+            if (NewsPanel.InvokeRequired)
             {
                 NewsPanel.Invoke((MethodInvoker)delegate
                 {
@@ -55,7 +50,7 @@ namespace CourseWork
             {
                 NewsPanel.Controls.Add(newspage);
                 newspage.Click += new EventHandler(ClickHandler);
-            }*/
+            }
         }
 
 
