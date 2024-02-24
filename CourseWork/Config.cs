@@ -3,6 +3,7 @@ namespace Diia
 {
     public class Config
     {
+        // comment
         public bool login = false;
         public string username;
         public DateTime loginDate;
